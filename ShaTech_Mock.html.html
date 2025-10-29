@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ShaTech Learning Hub</title>
+<style>
+    body {
+        font-family: 'Segoe UI', sans-serif;
+        background-color: #f4f6f9;
+        margin: 0;
+        padding: 0;
+    }
+    header {
+        background-color: #0078d7;
+        color: white;
+        padding: 15px 20px;
+        text-align: center;
+        font-size: 28px;
+        font-weight: bold;
+        letter-spacing: 1px;
+    }
+    .tabs {
+        display: flex;
+        justify-content: center;
+        background-color: #e1e4ea;
+        padding: 15px;
+        flex-wrap: wrap;
+    }
+    .tab {
+        background-color: white;
+        margin: 6px;
+        padding: 12px 22px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: 0.3s;
+        border: 2px solid transparent;
+    }
+    .tab:hover {
+        background-color: #0078d7;
+        color: white;
+    }
+    .main-content {
+        text-align: center;
+        margin-top: 50px;
+    }
+    h2 {
+        color: #333;
+    }
+</style>
+</head>
+<body>
+
+<header>ShaTech Learning Hub</header>
+
+<div class="tabs">
+    <div class="tab" onclick="openPage('ai.html')">Artificial Intelligence</div>
+    <div class="tab" onclick="openPage('machine_learning.html')">Machine Learning</div>
+    <div class="tab" onclick="openPage('deep_learning.html')">Deep Learning</div>
+    <div class="tab" onclick="openPage('python.html')">Python Programming</div>
+    <div class="tab" onclick="openPage('upsc.html')">UPSC</div>
+    <div class="tab" onclick="openPage('ies.html')">IES</div>
+    <div class="tab" onclick="openPage('kerala_psc.html')">Kerala PSC</div>
+    <div class="tab" onclick="openPage('sbi_po.html')">SBI PO</div>
+</div>
+
+<div class="main-content">
+    <h2>Welcome to ShaTech!</h2>
+    <p>Select a subject above to begin your learning or exam journey.</p>
+</div>
+
+<script>
+function openPage(pageName) {
+    window.location.href = pageName;
+}
+</script>
+
+</body>
+</html>
