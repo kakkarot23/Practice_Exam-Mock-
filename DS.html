@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ShaTech - Data Science Mock Test</title>
+<style>
+    body {
+        font-family: 'Segoe UI', sans-serif;
+        background-color: #f4f6f9;
+        margin: 0;
+        padding: 0;
+    }
+    header {
+        background-color: #0078d7;
+        color: white;
+        text-align: center;
+        padding: 20px;
+        font-size: 26px;
+        font-weight: bold;
+    }
+    .exam-container {
+        max-width: 900px;
+        background: white;
+        margin: 30px auto;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    .question {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #ddd;
+    }
+    .question p {
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+    label {
+        display: block;
+        margin: 5px 0;
+        cursor: pointer;
+    }
+    button {
+        background-color: #28a745;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 6px;
+        font-size: 16px;
+        cursor: pointer;
+        display: block;
+        margin: 20px auto;
+    }
+    button:hover {
+        background-color: #218838;
+    }
+    .correct {
+        background-color: #d4edda;
+        border-left: 5px solid #28a745;
+        padding: 5px;
+    }
+    .incorrect {
+        background-color: #f8d7da;
+        border-left: 5px solid #dc3545;
+        padding: 5px;
+    }
+    .explanation {
+        font-size: 14px;
+        color: #333;
+        margin-top: 8px;
+    }
+</style>
+</head>
+<body>
+
+<header>ShaTech - Data Science Mock Test</header>
+
+<div class="exam-container">
+    <h2>Answer all 20 questions</h2>
+    <form id="quizForm">
+        <div id="questions"></div>
+        <button type="button" onclick="submitQuiz()">Submit Exam</button>
+    </form>
+</div>
+
+<script>
+const quizData = [
+    {
+        q: "1. What is Data Science primarily concerned with?",
+        options: ["Data storage", "Extracting insights from data", "Software development", "Cloud computing"],
+        correct: 1,
+        explanation: "Data Science focuses on extracting useful insights and knowledge from data."
+    },
+    {
+        q: "2. Which language is most commonly used for Data Science?",
+        options: ["Java", "C++", "Python", "PHP"],
+        correct: 2,
+        explanation: "Python is the most widely used language in Data Science due to its extensive libraries."
+    },
+    {
+        q: "3. What does 'EDA' stand for in Data Science?",
+        options: ["Exploratory Data Analysis", "Essential Data Algorithm", "Efficient Data Application", "Empirical Data Access"],
+        correct: 0,
+        explanation: "EDA (Exploratory Data Analysis) involves summarizing and visualizing data to understand it."
+    },
+    {
+        q: "4. Which of the following is a supervised learning algorithm?",
+        options: ["K-Means Clustering", "Linear Regression", "DBSCAN", "PCA"],
+        correct: 1,
+        explanation: "Linear Regression is a supervised learning algorithm used for prediction."
+    },
+    {
+        q: "5. What is the main purpose of feature scaling?",
+        options: ["To standardize the range of independent variables", "To increase dataset size", "To remove missing values", "To reduce noise"],
+        correct: 0,
+        explanation: "Feature scaling ensures all features contribute equally by standardizing their ranges."
+    },
+    {
+        q: "6. Which library is used in Python for data manipulation and analysis?",
+        options: ["Pandas", "Matplotlib", "NumPy", "Seaborn"],
+        correct: 0,
+        explanation: "Pandas is used for data manipulation and analysis, with DataFrame objects as its core."
+    },
+    {
+        q: "7. What is the purpose of NumPy in Data Science?",
+        options: ["Statistical modeling", "Array operations", "Visualization", "Database queries"],
+        correct: 1,
+        explanation: "NumPy supports numerical computation with high-performance multidimensional arrays."
+    },
+    {
+        q: "8. Which plot is best for visualizing the distribution of a single variable?",
+        options: ["Line plot", "Histogram", "Scatter plot", "Bar chart"],
+        correct: 1,
+        explanation: "Histograms are ideal for showing frequency distribution of continuous data."
+    },
+    {
+        q: "9. What is the role of a Data Scientist?",
+        options: ["Building web applications", "Collecting and analyzing data for insights", "Designing graphics", "Managing servers"],
+        correct: 1,
+        explanation: "Data Scientists collect, clean, analyze, and interpret data to guide decisions."
+    },
+    {
+        q: "10. In machine learning, 'overfitting' means:",
+        options: ["Model fits training data too well but performs poorly on new data", "Model underperforms on both training and test data", "Data is too small", "The algorithm fails to converge"],
+        correct: 0,
+        explanation: "Overfitting occurs when a model memorizes training data patterns and fails to generalize."
+    },
+    {
+        q: "11. Which metric is commonly used to evaluate regression models?",
+        options: ["Accuracy", "F1 Score", "Mean Squared Error (MSE)", "Recall"],
+        correct: 2,
+        explanation: "MSE measures average squared difference between actual and predicted values."
+    },
+    {
+        q: "12. What does PCA stand for?",
+        options: ["Principal Component Analysis", "Predictive Component Algorithm", "Partial Correlation Adjustment", "Principal Curve Approximation"],
+        correct: 0,
+        explanation: "PCA is a dimensionality reduction technique used to simplify datasets."
+    },
+    {
+        q: "13. Which of the following is a classification algorithm?",
+        options: ["Linear Regression", "K-Nearest Neighbors (KNN)", "PCA", "K-Means"],
+        correct: 1,
+        explanation: "KNN is used for classification by comparing distances between data points."
+    },
+    {
+        q: "14. What is a confusion matrix used for?",
+        options: ["Displaying training loss", "Evaluating classification performance", "Calculating variance", "Reducing dimensionality"],
+        correct: 1,
+        explanation: "A confusion matrix shows how well a classification model performs with true/false positives/negatives."
+    },
+    {
+        q: "15. Which of these is NOT a step in the data science process?",
+        options: ["Data Collection", "Data Cleaning", "Model Deployment", "Web Design"],
+        correct: 3,
+        explanation: "Web design is unrelated to the data science workflow."
+    },
+    {
+        q: "16. Which type of data has a natural order but no fixed interval?",
+        options: ["Nominal", "Ordinal", "Interval", "Ratio"],
+        correct: 1,
+        explanation: "Ordinal data has ordered categories but undefined distances between them."
+    },
+    {
+        q: "17. What does a high correlation coefficient indicate?",
+        options: ["Weak relationship", "No relationship", "Strong relationship", "Negative trend only"],
+        correct: 2,
+        explanation: "A high correlation coefficient (close to ±1) indicates a strong linear relationship."
+    },
+    {
+        q: "18. Cross-validation helps in:",
+        options: ["Reducing bias and variance", "Increasing overfitting", "Simplifying datasets", "Adding noise"],
+        correct: 0,
+        explanation: "Cross-validation evaluates model performance on multiple folds to reduce overfitting."
+    },
+    {
+        q: "19. What is the main use of Matplotlib?",
+        options: ["Data visualization", "Statistical analysis", "Database management", "Model tuning"],
+        correct: 0,
+        explanation: "Matplotlib is used for creating static, animated, and interactive visualizations in Python."
+    },
+    {
+        q: "20. Which statement about Data Science is TRUE?",
+        options: ["It only involves coding", "It requires both statistical and programming skills", "It ignores domain knowledge", "It replaces all manual analysis"],
+        correct: 1,
+        explanation: "Data Science requires statistical understanding, programming, and domain expertise."
+    }
+];
+
+const quizContainer = document.getElementById("questions");
+
+quizData.forEach((item, index) => {
+    const div = document.createElement("div");
+    div.className = "question";
+    div.innerHTML = `
+        <p>${item.q}</p>
+        ${item.options.map((opt, i) => `
+            <label>
+                <input type="radio" name="q${index}" value="${i}"> ${opt}
+            </label>
+        `).join('')}
+    `;
+    quizContainer.appendChild(div);
+});
+
+function submitQuiz() {
+    const form = document.forms.quizForm;
+    let score = 0;
+    let resultText = "ShaTech - Data Science Mock Test Answer Key\n\n";
+
+    quizData.forEach((item, i) => {
+        const selected = form[`q${i}`].value;
+        const div = quizContainer.children[i];
+        if (selected == item.correct) {
+            score++;
+            div.classList.add("correct");
+        } else {
+            div.classList.add("incorrect");
+        }
+        div.innerHTML += `<div class='explanation'><b>Correct Answer:</b> ${item.options[item.correct]}<br>${item.explanation}</div>`;
+        resultText += `${item.q}\n✅ Correct: ${item.options[item.correct]}\nExplanation: ${item.explanation}\n\n`;
+    });
+
+    const percent = ((score / quizData.length) * 100).toFixed(2);
+    resultText += `Total Score: ${score}/${quizData.length} (${percent}%)`;
+
+    const blob = new Blob([resultText], { type: "text/plain" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "DataScience_AnswerKey.txt";
+    link.click();
+
+    alert(`Your Score: ${score}/${quizData.length} (${percent}%)`);
+}
+</script>
+
+</body>
+</html>
