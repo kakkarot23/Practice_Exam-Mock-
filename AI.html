@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ShaTech - Artificial Intelligence Mock Test</title>
+<style>
+    body {
+        font-family: 'Segoe UI', sans-serif;
+        background-color: #f4f6f9;
+        margin: 0;
+        padding: 0;
+    }
+    header {
+        background-color: #0078d7;
+        color: white;
+        text-align: center;
+        padding: 20px;
+        font-size: 26px;
+        font-weight: bold;
+    }
+    .exam-container {
+        max-width: 900px;
+        background: white;
+        margin: 30px auto;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    .question {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #ddd;
+    }
+    .question p {
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+    label {
+        display: block;
+        margin: 5px 0;
+        cursor: pointer;
+    }
+    button {
+        background-color: #28a745;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 6px;
+        font-size: 16px;
+        cursor: pointer;
+        display: block;
+        margin: 20px auto;
+    }
+    button:hover {
+        background-color: #218838;
+    }
+    .correct {
+        background-color: #d4edda;
+        border-left: 5px solid #28a745;
+        padding: 5px;
+    }
+    .incorrect {
+        background-color: #f8d7da;
+        border-left: 5px solid #dc3545;
+        padding: 5px;
+    }
+    .explanation {
+        font-size: 14px;
+        color: #333;
+        margin-top: 8px;
+    }
+</style>
+</head>
+<body>
+
+<header>ShaTech - Artificial Intelligence Mock Test</header>
+
+<div class="exam-container">
+    <h2>Answer all 20 questions</h2>
+    <form id="quizForm">
+
+        <div id="questions"></div>
+
+        <button type="button" onclick="submitQuiz()">Submit Exam</button>
+    </form>
+</div>
+
+<script>
+const quizData = [
+    {
+        q: "1. What is Artificial Intelligence?",
+        options: ["The study of human biology", "Programming computers to think and learn like humans", "Hardware design", "Network security"],
+        correct: 1,
+        explanation: "AI involves creating systems that can mimic human intelligence, including reasoning and learning."
+    },
+    {
+        q: "2. Which of the following is NOT a branch of AI?",
+        options: ["Machine Learning", "Neural Networks", "Robotics", "Cloud Computing"],
+        correct: 3,
+        explanation: "Cloud computing supports AI but is not a direct branch of AI."
+    },
+    {
+        q: "3. The Turing Test is used to measure:",
+        options: ["Computer speed", "Machine intelligence", "Hardware efficiency", "Human error rate"],
+        correct: 1,
+        explanation: "The Turing Test checks whether a machine can exhibit human-like intelligent behavior."
+    },
+    {
+        q: "4. Which search algorithm uses heuristics to find solutions efficiently?",
+        options: ["Breadth-First Search", "Depth-First Search", "A* Search", "Linear Search"],
+        correct: 2,
+        explanation: "A* search uses heuristics to guide its path and find optimal solutions efficiently."
+    },
+    {
+        q: "5. Knowledge representation in AI means:",
+        options: ["Programming syntax", "Storing data", "Representing facts, rules, and relationships", "Drawing graphs"],
+        correct: 2,
+        explanation: "Knowledge representation involves structuring information so machines can reason with it."
+    },
+    {
+        q: "6. The term 'agent' in AI refers to:",
+        options: ["A computer virus", "An entity that perceives and acts upon an environment", "A web crawler", "Human assistant"],
+        correct: 1,
+        explanation: "An AI agent perceives the environment through sensors and acts using actuators."
+    },
+    {
+        q: "7. Which is an example of unsupervised learning?",
+        options: ["Classification", "Regression", "Clustering", "Prediction"],
+        correct: 2,
+        explanation: "Unsupervised learning like clustering finds patterns without labeled data."
+    },
+    {
+        q: "8. Reinforcement learning involves:",
+        options: ["Supervised labels", "Penalties and rewards", "Only static data", "Text mining"],
+        correct: 1,
+        explanation: "Reinforcement learning trains agents through rewards and penalties based on actions."
+    },
+    {
+        q: "9. In a decision tree, the node with the highest information gain is chosen as:",
+        options: ["Root node", "Leaf node", "Sub-node", "Sibling node"],
+        correct: 0,
+        explanation: "The root node represents the feature with the highest information gain."
+    },
+    {
+        q: "10. Which algorithm is used for natural language processing?",
+        options: ["Dijkstra's algorithm", "Naive Bayes", "Bellman-Ford", "K-Means"],
+        correct: 1,
+        explanation: "Naive Bayes is often used in NLP for text classification and sentiment analysis."
+    },
+    {
+        q: "11. Which of these is a neural network activation function?",
+        options: ["Sigmoid", "Heuristic", "RMSProp", "Gradient"],
+        correct: 0,
+        explanation: "Sigmoid is an activation function that maps input between 0 and 1."
+    },
+    {
+        q: "12. Deep learning mainly uses:",
+        options: ["Shallow networks", "Multi-layer neural networks", "Linear regression", "Naive Bayes"],
+        correct: 1,
+        explanation: "Deep learning is based on neural networks with multiple hidden layers."
+    },
+    {
+        q: "13. Which of the following is a type of AI system that operates autonomously?",
+        options: ["Reactive Machines", "Rule-based Systems", "Expert Systems", "Autonomous Agents"],
+        correct: 3,
+        explanation: "Autonomous agents perceive, reason, and act independently in dynamic environments."
+    },
+    {
+        q: "14. Expert systems are built using:",
+        options: ["If-then rules", "Neural networks", "Clustering", "Regression models"],
+        correct: 0,
+        explanation: "Expert systems use rule-based logic (if-then statements) to simulate human expertise."
+    },
+    {
+        q: "15. What is the goal of computer vision?",
+        options: ["Data encryption", "Image recognition and understanding", "Sound processing", "Speech synthesis"],
+        correct: 1,
+        explanation: "Computer vision enables machines to interpret and analyze visual information from images or videos."
+    },
+    {
+        q: "16. What is the difference between strong AI and weak AI?",
+        options: ["Weak AI mimics limited tasks, strong AI replicates human intelligence", "Strong AI is faster", "Weak AI uses neural networks", "Strong AI is only for robotics"],
+        correct: 0,
+        explanation: "Strong AI aims to fully simulate human reasoning, while weak AI focuses on specific tasks."
+    },
+    {
+        q: "17. Which algorithm is commonly used for AI search problems?",
+        options: ["A*", "Dijkstra", "BFS", "DFS"],
+        correct: 0,
+        explanation: "A* search efficiently combines path cost and heuristic information."
+    },
+    {
+        q: "18. Machine perception in AI refers to:",
+        options: ["AI systems perceiving data through sensors", "Cloud storage", "Speech synthesis", "Binary computation"],
+        correct: 0,
+        explanation: "Machine perception includes vision, sound, and sensor-based environmental understanding."
+    },
+    {
+        q: "19. Natural Language Processing involves:",
+        options: ["Understanding and generating human language", "Compiling code", "Data encryption", "Video compression"],
+        correct: 0,
+        explanation: "NLP deals with machine understanding and generation of human languages."
+    },
+    {
+        q: "20. Which of the following is a challenge in AI ethics?",
+        options: ["Data bias", "Increased accuracy", "High speed computing", "Automation"],
+        correct: 0,
+        explanation: "AI ethics faces challenges like bias, privacy, and accountability in decision-making."
+    }
+];
+
+const quizContainer = document.getElementById("questions");
+
+quizData.forEach((item, index) => {
+    const div = document.createElement("div");
+    div.className = "question";
+    div.innerHTML = `
+        <p>${item.q}</p>
+        ${item.options.map((opt, i) => `
+            <label>
+                <input type="radio" name="q${index}" value="${i}"> ${opt}
+            </label>
+        `).join('')}
+    `;
+    quizContainer.appendChild(div);
+});
+
+function submitQuiz() {
+    const form = document.forms.quizForm;
+    let score = 0;
+    let resultText = "ShaTech - Artificial Intelligence Mock Test Answer Key\n\n";
+
+    quizData.forEach((item, i) => {
+        const selected = form[`q${i}`].value;
+        const div = quizContainer.children[i];
+        if (selected == item.correct) {
+            score++;
+            div.classList.add("correct");
+        } else {
+            div.classList.add("incorrect");
+        }
+        div.innerHTML += `<div class='explanation'><b>Correct Answer:</b> ${item.options[item.correct]}<br>${item.explanation}</div>`;
+        resultText += `${item.q}\n✅ Correct: ${item.options[item.correct]}\nExplanation: ${item.explanation}\n\n`;
+    });
+
+    const percent = ((score / quizData.length) * 100).toFixed(2);
+    resultText += `Total Score: ${score}/${quizData.length} (${percent}%)`;
+
+    const blob = new Blob([resultText], { type: "text/plain" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "AI_MockTest_AnswerKey.txt";
+    link.click();
+
+    alert(`Your Score: ${score}/${quizData.length} (${percent}%)`);
+}
+</script>
+
+</body>
+</html>
