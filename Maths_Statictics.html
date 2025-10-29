@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ShaTech - Probability & Statistics for ML Exam</title>
+<style>
+    body {
+        font-family: 'Segoe UI', sans-serif;
+        background-color: #f4f6f9;
+        margin: 0;
+        padding: 0;
+    }
+    header {
+        background-color: #0078d7;
+        color: white;
+        text-align: center;
+        padding: 20px;
+        font-size: 26px;
+        font-weight: bold;
+    }
+    .exam-container {
+        max-width: 900px;
+        background: white;
+        margin: 30px auto;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    .question {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #ddd;
+    }
+    .question p {
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+    label {
+        display: block;
+        margin: 5px 0;
+        cursor: pointer;
+    }
+    button {
+        background-color: #28a745;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 6px;
+        font-size: 16px;
+        cursor: pointer;
+        display: block;
+        margin: 20px auto;
+    }
+    button:hover {
+        background-color: #218838;
+    }
+    .correct {
+        background-color: #d4edda;
+        border-left: 5px solid #28a745;
+        padding: 5px;
+    }
+    .incorrect {
+        background-color: #f8d7da;
+        border-left: 5px solid #dc3545;
+        padding: 5px;
+    }
+    .explanation {
+        font-size: 14px;
+        color: #333;
+        margin-top: 8px;
+    }
+</style>
+</head>
+<body>
+
+<header>ShaTech - Probability & Statistics for Machine Learning Exam</header>
+
+<div class="exam-container">
+    <h2>Answer all 20 questions</h2>
+    <form id="quizForm">
+
+        <!-- Questions start -->
+        <div id="questions"></div>
+        <!-- Questions end -->
+
+        <button type="button" onclick="submitQuiz()">Submit Exam</button>
+    </form>
+</div>
+
+<script>
+const quizData = [
+    {
+        q: "1. What does the probability of an event represent?",
+        options: ["The number of trials", "Likelihood of event occurrence", "The mean of dataset", "The correlation coefficient"],
+        correct: 1,
+        explanation: "Probability measures how likely an event is to occur, ranging from 0 to 1."
+    },
+    {
+        q: "2. Which of the following represents a continuous probability distribution?",
+        options: ["Binomial", "Poisson", "Normal", "Bernoulli"],
+        correct: 2,
+        explanation: "The Normal distribution is continuous; Binomial, Poisson, and Bernoulli are discrete."
+    },
+    {
+        q: "3. The expected value of a random variable is also known as:",
+        options: ["Mode", "Mean", "Median", "Variance"],
+        correct: 1,
+        explanation: "Expected value is the theoretical mean of the random variable."
+    },
+    {
+        q: "4. The variance of a dataset measures:",
+        options: ["Central tendency", "Linear relationship", "Dispersion", "Skewness"],
+        correct: 2,
+        explanation: "Variance measures how far data points spread out from the mean."
+    },
+    {
+        q: "5. The area under a probability density function (PDF) equals:",
+        options: ["1", "0", "Depends on mean", "Standard deviation"],
+        correct: 0,
+        explanation: "The total probability across all possible outcomes equals 1."
+    },
+    {
+        q: "6. Which test is used to check the relationship between categorical variables?",
+        options: ["t-test", "ANOVA", "Chi-square test", "Z-test"],
+        correct: 2,
+        explanation: "The Chi-square test checks for association between categorical variables."
+    },
+    {
+        q: "7. What does a p-value less than 0.05 usually indicate?",
+        options: ["Accept null hypothesis", "Reject null hypothesis", "No relationship", "Equal means"],
+        correct: 1,
+        explanation: "A low p-value (<0.05) suggests strong evidence against the null hypothesis."
+    },
+    {
+        q: "8. Central Limit Theorem states that:",
+        options: ["Mean = median = mode", "Sample means follow Normal distribution", "Data is symmetric", "Variance is constant"],
+        correct: 1,
+        explanation: "The CLT says that sample means approximate a Normal distribution as sample size increases."
+    },
+    {
+        q: "9. Covariance measures:",
+        options: ["Non-linear relation", "Average difference", "Joint variability of two variables", "Causation"],
+        correct: 2,
+        explanation: "Covariance shows whether two variables move together."
+    },
+    {
+        q: "10. The correlation coefficient (r) ranges between:",
+        options: ["-1 and 1", "0 and 1", "-∞ and ∞", "0 and ∞"],
+        correct: 0,
+        explanation: "r ranges from -1 (negative correlation) to +1 (positive correlation)."
+    },
+    {
+        q: "11. Which of these distributions is symmetric?",
+        options: ["Normal", "Exponential", "Chi-square", "Poisson"],
+        correct: 0,
+        explanation: "The Normal distribution is symmetric about its mean."
+    },
+    {
+        q: "12. A random variable that takes only two outcomes is called:",
+        options: ["Poisson variable", "Binomial variable", "Bernoulli variable", "Uniform variable"],
+        correct: 2,
+        explanation: "Bernoulli variables represent single-trial binary outcomes (success/failure)."
+    },
+    {
+        q: "13. What is the mean of a standard normal distribution?",
+        options: ["0", "1", "Depends on data", "Undefined"],
+        correct: 0,
+        explanation: "Standard normal distribution has mean = 0 and standard deviation = 1."
+    },
+    {
+        q: "14. The law of large numbers implies:",
+        options: ["Sample mean → population mean", "Variance → 0", "Mean = Median", "Data becomes normal"],
+        correct: 0,
+        explanation: "As sample size grows, sample mean approximates the population mean."
+    },
+    {
+        q: "15. Which of the following is NOT a measure of central tendency?",
+        options: ["Mean", "Median", "Mode", "Variance"],
+        correct: 3,
+        explanation: "Variance measures spread, not central tendency."
+    },
+    {
+        q: "16. In hypothesis testing, Type I error means:",
+        options: ["Fail to reject false H0", "Reject true H0", "Reject false H0", "Accept true H1"],
+        correct: 1,
+        explanation: "Type I error occurs when a true null hypothesis is wrongly rejected."
+    },
+    {
+        q: "17. What is the z-score of a data point?",
+        options: ["Its squared value", "Deviation from mean divided by std dev", "Probability of occurrence", "Sum of all observations"],
+        correct: 1,
+        explanation: "Z = (x - μ) / σ shows how many standard deviations away x is from the mean."
+    },
+    {
+        q: "18. The sum of probabilities of all possible outcomes in a sample space equals:",
+        options: ["0", "1", "Depends on experiment", "Infinity"],
+        correct: 1,
+        explanation: "Total probability in a closed system always equals 1."
+    },
+    {
+        q: "19. Which of the following distributions is used for binary classification likelihood?",
+        options: ["Normal", "Poisson", "Bernoulli", "Exponential"],
+        correct: 2,
+        explanation: "Bernoulli models binary outcomes like success/failure."
+    },
+    {
+        q: "20. The slope in simple linear regression represents:",
+        options: ["Intercept", "Mean", "Change in Y per unit change in X", "Variance"],
+        correct: 2,
+        explanation: "Slope (β₁) shows how Y changes with one unit increase in X."
+    }
+];
+
+const quizContainer = document.getElementById("questions");
+
+quizData.forEach((item, index) => {
+    const div = document.createElement("div");
+    div.className = "question";
+    div.innerHTML = `
+        <p>${item.q}</p>
+        ${item.options.map((opt, i) => `
+            <label>
+                <input type="radio" name="q${index}" value="${i}"> ${opt}
+            </label>
+        `).join('')}
+    `;
+    quizContainer.appendChild(div);
+});
+
+function submitQuiz() {
+    const form = document.forms.quizForm;
+    let score = 0;
+    let resultText = "ShaTech - Probability & Statistics for ML Exam Answer Key\n\n";
+
+    quizData.forEach((item, i) => {
+        const selected = form[`q${i}`].value;
+        const div = quizContainer.children[i];
+        if (selected == item.correct) {
+            score++;
+            div.classList.add("correct");
+        } else {
+            div.classList.add("incorrect");
+        }
+        div.innerHTML += `<div class='explanation'><b>Correct Answer:</b> ${item.options[item.correct]}<br>${item.explanation}</div>`;
+        resultText += `${item.q}\n✅ Correct: ${item.options[item.correct]}\nExplanation: ${item.explanation}\n\n`;
+    });
+
+    const percent = ((score / quizData.length) * 100).toFixed(2);
+    resultText += `Total Score: ${score}/${quizData.length} (${percent}%)`;
+
+    // Download answer key
+    const blob = new Blob([resultText], { type: "text/plain" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "Probability_Statistics_AnswerKey.txt";
+    link.click();
+
+    alert(`Your Score: ${score}/${quizData.length} (${percent}%)`);
+}
+</script>
+
+</body>
+</html>
