@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ShaTech | Machine Learning Mock Test</title>
+<style>
+    body {
+        font-family: 'Segoe UI', sans-serif;
+        background-color: #f4f6f9;
+        margin: 0;
+        padding: 0;
+    }
+    header {
+        background-color: #0078d7;
+        color: white;
+        padding: 15px;
+        text-align: center;
+        font-size: 26px;
+        font-weight: bold;
+    }
+    .container {
+        max-width: 900px;
+        background: white;
+        margin: 30px auto;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    .question {
+        margin-bottom: 20px;
+    }
+    .question h3 {
+        margin-bottom: 10px;
+        color: #222;
+    }
+    label {
+        display: block;
+        margin-bottom: 8px;
+        cursor: pointer;
+    }
+    button {
+        display: block;
+        background-color: #0078d7;
+        color: white;
+        border: none;
+        padding: 10px 16px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 16px;
+        margin: 20px auto;
+        transition: 0.3s;
+    }
+    button:hover {
+        background-color: #005fa3;
+    }
+    .correct { background-color: #d4edda; }
+    .incorrect { background-color: #f8d7da; }
+</style>
+</head>
+<body>
+
+<header>ShaTech | Machine Learning Mock Test</header>
+
+<div class="container">
+    <h2>Machine Learning - 20 Questions</h2>
+    <form id="quizForm">
+        <div id="quiz"></div>
+        <button type="button" onclick="submitQuiz()">Submit Test</button>
+    </form>
+</div>
+
+<script>
+const quizData = [
+    {
+        q: "1. What is the main goal of supervised learning?",
+        options: ["To discover hidden patterns in data", "To predict outcomes based on labeled data", "To reduce dimensionality", "To cluster similar data points"],
+        correct: 1,
+        explanation: "Supervised learning uses labeled data to train models for prediction."
+    },
+    {
+        q: "2. Which algorithm is used for classification problems?",
+        options: ["K-Means", "Linear Regression", "Decision Tree", "PCA"],
+        correct: 2,
+        explanation: "Decision Trees are popular for classification tasks."
+    },
+    {
+        q: "3. Which evaluation metric is best for imbalanced datasets?",
+        options: ["Accuracy", "Precision-Recall", "MAE", "R-squared"],
+        correct: 1,
+        explanation: "Precision-Recall is more informative than accuracy for imbalanced data."
+    },
+    {
+        q: "4. What does the term 'overfitting' mean?",
+        options: ["Model performs well on test data", "Model fits noise instead of pattern", "Model underestimates trend", "Model has low variance"],
+        correct: 1,
+        explanation: "Overfitting means the model captures noise, reducing generalization ability."
+    },
+    {
+        q: "5. Which algorithm is commonly used for dimensionality reduction?",
+        options: ["SVM", "PCA", "Naive Bayes", "KNN"],
+        correct: 1,
+        explanation: "PCA (Principal Component Analysis) is used for dimensionality reduction."
+    },
+    {
+        q: "6. In KNN, 'K' represents what?",
+        options: ["Number of features", "Number of clusters", "Number of nearest neighbors", "Kernel size"],
+        correct: 2,
+        explanation: "K in KNN is the number of nearest neighbors used to classify a point."
+    },
+    {
+        q: "7. Which of these is an unsupervised algorithm?",
+        options: ["K-Means", "Logistic Regression", "Random Forest", "LDA"],
+        correct: 0,
+        explanation: "K-Means is an unsupervised clustering algorithm."
+    },
+    {
+        q: "8. What is the loss function used in linear regression?",
+        options: ["Cross-Entropy", "Mean Squared Error", "Hinge Loss", "Entropy Loss"],
+        correct: 1,
+        explanation: "Linear regression minimizes the Mean Squared Error."
+    },
+    {
+        q: "9. What does 'bias' in a model refer to?",
+        options: ["Model complexity", "Error due to assumptions", "Variance error", "Data variance"],
+        correct: 1,
+        explanation: "Bias is the error introduced by simplifying assumptions in the model."
+    },
+    {
+        q: "10. Which technique helps prevent overfitting?",
+        options: ["Dropout", "Increasing epochs", "Smaller dataset", "Removing regularization"],
+        correct: 0,
+        explanation: "Dropout randomly deactivates neurons to reduce overfitting."
+    },
+    {
+        q: "11. Which algorithm is best for continuous output prediction?",
+        options: ["Decision Tree Classifier", "Logistic Regression", "Linear Regression", "Naive Bayes"],
+        correct: 2,
+        explanation: "Linear Regression is used to predict continuous values."
+    },
+    {
+        q: "12. What is the purpose of feature scaling?",
+        options: ["Improve accuracy", "Speed up convergence", "Reduce dimensionality", "Add new features"],
+        correct: 1,
+        explanation: "Feature scaling ensures faster convergence and balanced feature influence."
+    },
+    {
+        q: "13. Which metric measures classification accuracy?",
+        options: ["RMSE", "R-squared", "Confusion Matrix", "MSE"],
+        correct: 2,
+        explanation: "Confusion Matrix gives insights into classification accuracy."
+    },
+    {
+        q: "14. Ensemble methods combine what?",
+        options: ["Multiple datasets", "Multiple models", "Multiple losses", "Multiple optimizers"],
+        correct: 1,
+        explanation: "Ensemble methods like Bagging and Boosting combine multiple models."
+    },
+    {
+        q: "15. Gradient Descent is used for what purpose?",
+        options: ["Optimization", "Classification", "Feature Extraction", "Normalization"],
+        correct: 0,
+        explanation: "Gradient Descent optimizes model parameters by minimizing the loss function."
+    },
+    {
+        q: "16. Which of these is a boosting algorithm?",
+        options: ["Bagging", "Adaboost", "Random Forest", "K-Means"],
+        correct: 1,
+        explanation: "Adaboost is a boosting algorithm that combines weak learners."
+    },
+    {
+        q: "17. The activation function in logistic regression is:",
+        options: ["Sigmoid", "ReLU", "Softmax", "Linear"],
+        correct: 0,
+        explanation: "Logistic regression uses the Sigmoid function for binary output."
+    },
+    {
+        q: "18. What is the purpose of regularization?",
+        options: ["Add noise", "Reduce overfitting", "Increase bias", "Increase complexity"],
+        correct: 1,
+        explanation: "Regularization penalizes large coefficients to reduce overfitting."
+    },
+    {
+        q: "19. Cross-validation is used for:",
+        options: ["Feature scaling", "Model evaluation", "Parameter tuning", "Data cleaning"],
+        correct: 1,
+        explanation: "Cross-validation evaluates model performance on unseen subsets."
+    },
+    {
+        q: "20. Which library is commonly used for machine learning in Python?",
+        options: ["NumPy", "Matplotlib", "Scikit-learn", "Pandas"],
+        correct: 2,
+        explanation: "Scikit-learn provides efficient tools for ML algorithms and evaluation."
+    }
+];
+
+const quizContainer = document.getElementById("quiz");
+quizData.forEach((item, index) => {
+    const qDiv = document.createElement("div");
+    qDiv.classList.add("question");
+    qDiv.innerHTML = `
+        <h3>${item.q}</h3>
+        ${item.options.map((opt, i) =>
+            `<label><input type="radio" name="q${index}" value="${i}"> ${opt}</label>`
+        ).join('')}
+    `;
+    quizContainer.appendChild(qDiv);
+});
+
+function submitQuiz() {
+    let score = 0;
+    let answerKey = "ShaTech - Machine Learning Mock Test Answer Key\n\n";
+    const questions = document.querySelectorAll(".question");
+
+    quizData.forEach((item, index) => {
+        const selected = document.querySelector(`input[name="q${index}"]:checked`);
+        const qDiv = questions[index];
+        const labels = qDiv.querySelectorAll("label");
+
+        labels.forEach((lbl, i) => {
+            lbl.classList.remove("correct", "incorrect");
+            if (i === item.correct) lbl.classList.add("correct");
+        });
+
+        if (selected) {
+            if (parseInt(selected.value) === item.correct) {
+                score++;
+            } else {
+                labels[selected.value].classList.add("incorrect");
+            }
+        } else {
+            qDiv.style.background = "#fff3cd";
+        }
+
+        answerKey += `${item.q}\nCorrect: ${item.options[item.correct]}\nExplanation: ${item.explanation}\n\n`;
+    });
+
+    alert(`You scored ${score}/${quizData.length}`);
+
+    const blob = new Blob([answerKey], { type: "text/plain" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "Machine_Learning_Answer_Key.txt";
+    link.click();
+}
+</script>
+
+</body>
+</html>
